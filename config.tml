@@ -1,26 +1,26 @@
 [user]
 name = "柏尾 凌大"
 email = "ryota.kashio@cap-net.co.jp"
-# YYYY-MM-DD
+# date = YYYY-MM-DD, dateを定義しなければ当日の日付が入力される
 date = 2020-10-03T00:00:00Z
 
 [[user.fileInfo]]
 id = 1
-path = "/sample/{{YYYY}}/{{MM}}/{{D}}"
-name = "file"
+path = "/sample/{YYYY}/{MM}/{D}"
+name = "{YYYY}_{MM}_{DD}_file"
 # today, yesterday, tomorrow, lastmonth, nextmonth
 when = "today"
 
 [[user.fileInfo]]
 id = 2
-path = "/sample2"
-name = "file"
+path = "/{YYYY}{MM}{DD}/{YYYY}-{MM}-{DD}/sample2"
+name = "{MM}{DD}/file"
 # today, yesterday, tomorrow, lastmonth, nextmonth
 when = "today"
 
 [[user.fileInfo]]
 id = 3
-path = "/sample3"
+path = "/{YYYY}{MM}/sample3"
 name = "file"
 # today, yesterday, tomorrow, lastmonth, nextmonth
 when = "today"

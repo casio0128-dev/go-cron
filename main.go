@@ -24,7 +24,7 @@ func main() {
 		fmt.Printf("File %d\n", k)
 		fmt.Printf("  id is %d\n", v.Id)
 		fmt.Printf("  path is %s\n", v.Path)
-		fmt.Printf("  filename is %s\n", v.Filename)
+		fmt.Printf("  filename is %s\n", v.Name)
 		fmt.Printf("  when is %s\n", v.When)
 	}
 }
