@@ -1,0 +1,26 @@
+[user]
+name = "柏尾 凌大"
+email = "ryota.kashio@cap-net.co.jp"
+# YYYY-MM-DD
+date = 2020-10-03T00:00:00Z
+
+[[user.fileInfo]]
+id = 1
+path = "/sample/{{YYYY}}/{{MM}}/{{D}}"
+name = "file"
+# today, yesterday, tomorrow, lastmonth, nextmonth
+when = "today"
+
+[[user.fileInfo]]
+id = 2
+path = "/sample2"
+name = "file"
+# today, yesterday, tomorrow, lastmonth, nextmonth
+when = "today"
+
+[[user.fileInfo]]
+id = 3
+path = "/sample3"
+name = "file"
+# today, yesterday, tomorrow, lastmonth, nextmonth
+when = "today"
