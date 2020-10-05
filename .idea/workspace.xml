@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6686e879-c114-422d-9dec-2621b5a14df7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/fileOpener.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/fileOpener.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fileOpener.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/go_build_fileOpener" beforeDir="false" afterPath="$PROJECT_DIR$/bin/go_build_fileOpener" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/conf.go" beforeDir="false" afterPath="$PROJECT_DIR$/conf/conf.go" afterDir="false" />
@@ -36,13 +38,15 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
+    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../choseisanTool" />
+    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoProjectSettingsConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bin" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -58,7 +62,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Build.go build fileOpener.exe">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="fileOpener" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -77,6 +81,20 @@
       <output_directory value="$PROJECT_DIR$/bin" />
       <method v="2" />
     </configuration>
+    <configuration name="go build fileOpener.exe" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="fileOpener" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <go_parameters value="-i -o bin/fileOpener.exe" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$" />
+      <output_directory value="$PROJECT_DIR$/bin" />
+      <option name="run" value="false" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build fileOpener" />
+      <item itemvalue="Go Build.go build fileOpener.exe" />
+    </list>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -89,7 +107,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
