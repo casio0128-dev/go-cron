@@ -1,7 +1,10 @@
 package conf
 
 import (
+	"fmt"
+	"os/exec"
 	"regexp"
+	"runtime"
 	"strings"
 	"time"
 )
@@ -12,16 +15,16 @@ type Config struct {
 
 type User struct {
 	Name  string        `toml:"name"`
-	Email  string        `toml:"email"`
+	Email  string       `toml:"email"`
 	Date time.Time		`toml:"date"`
-	Files []FileInfo	 `toml:"fileInfo"`
+	Files []FileInfo	`toml:"fileInfo"`
 }
 
 type FileInfo struct {
 	Id int				`toml:"id"`
 	Path string			`toml:"path"`
-	Name string		`toml:"name"`
 	When string			`toml:"when"`
+	Cron string			`toml:"cron"`
 }
 
 func (conf *Config) Parse () error {
@@ -38,12 +41,6 @@ func (conf *Config) Parse () error {
 		for _, match := range reg.FindAllString(file.Path, -1) {
 			if reg.MatchString(file.Path) {
 				file.Path = conf.User.parseDate(file.Path, match)
-			}
-		}
-
-		for _, match := range reg.FindAllString(file.Name, -1) {
-			if reg.MatchString(file.Name) {
-				file.Name = conf.User.parseDate(file.Name, match)
 			}
 		}
 		conf.User.Files[index] = file
@@ -69,43 +66,70 @@ func (user User) parseDate (src, format string) (result string) {
 	return
 }
 
-func (user User) parseYear (src string) string {
-	if !strings.Contains(src, "{{YYYY}}") {
-		return ""
-	}
-
-	return strings.ReplaceAll(src, "{{YYYY}}", user.Date.Format("2006"))
+type CronInfo struct {
+	Minute string
+	Hour string
+	Day string
+	Month string
+	Week string
 }
 
-func (user User) parseMonth (src, format string) string {
-	var result string
-
-	if !strings.Contains(src, format) {
-		return ""
+func (file FileInfo) GetCron() *CronInfo {
+	cronInfo := strings.Split(file.Cron, " ")
+	if len(cronInfo) <= 4 {
+		return nil
 	}
 
-	switch format {
-	case "{{MM}}":
-		result = strings.ReplaceAll(src, "{{MM}}", user.Date.Format("01"))
-	case "{{M}}":
-		result = strings.ReplaceAll(src, "{{M}}", user.Date.Format("1"))
+/*	min := cronInfo[0]
+	hour  := cronInfo[1]
+	day  := cronInfo[2]
+	mon  := cronInfo[3]
+	week  := cronInfo[4]*/
+
+/*	if strings.EqualFold(min, "*") {
+		min = "1"
+	} else if len(strings.Split(min, "/")) == 2 {
+		num, err := strings.Atoi(strings.Split(min, "/")[0])
+		denom, err := strings.Atoi(strings.Split(min, "/")[1])
+		if err != nil {
+			panic(err)
+		}
+		min = fmt.Sprintf("%s", int(num / denom))
+	}*/
+
+
+	return &CronInfo{
+		Minute: cronInfo[0],
+		Hour:   cronInfo[1],
+		Day:   cronInfo[2],
+		Month:  cronInfo[3],
+		Week:   cronInfo[4],
 	}
-	return result
 }
 
-func (user User) parseDay (src, format string) string {
-	var result string
+func (file FileInfo) Run () error {
+	if strings.EqualFold(file.Cron, "") {
+		if err := open(file.Path); err != nil {
+			return err
+		}
 
-	if !strings.Contains(src, format) {
-		return ""
+		fmt.Println("open to ",file.Path)
+	}
+	return nil
+}
+
+func open(cmd string) error{
+	var arg1Cmd string
+
+	switch runtime.GOOS {
+	case "darwin":
+		arg1Cmd = "open"
+	case "windows":
+		arg1Cmd = "start"
 	}
 
-	switch format {
-	case "{{DD}}":
-		result = strings.ReplaceAll(src, "{{DD}}", user.Date.Format("02"))
-	case "{{D}}":
-		result = strings.ReplaceAll(src, "{{D}}", user.Date.Format("2"))
+	if err := exec.Command(arg1Cmd, cmd).Run(); err != nil {
+		return err
 	}
-
-	return result
+	return nil
 }

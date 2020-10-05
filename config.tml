@@ -6,21 +6,13 @@ date = 2020-10-03T00:00:00Z
 
 [[user.fileInfo]]
 id = 1
-path = "/sample/{YYYY}/{MM}/{D}"
-name = "{YYYY}_{MM}_{DD}_file"
-# today, yesterday, tomorrow, lastmonth, nextmonth
-when = "today"
+path = "/Users/casio-mac/Develop/Golang/fileOpener"
+#path = "/sample/{YYYY}/{MM}/{D}"
+cron = ""
+when = ""
 
 [[user.fileInfo]]
 id = 2
-path = "/{YYYY}{MM}{DD}/{YYYY}-{MM}-{DD}/sample2"
-name = "{MM}{DD}/file"
-# today, yesterday, tomorrow, lastmonth, nextmonth
-when = "today"
-
-[[user.fileInfo]]
-id = 3
-path = "/{YYYY}{MM}/sample3"
-name = "file"
-# today, yesterday, tomorrow, lastmonth, nextmonth
-when = "today"
+path = "/Users/casio-mac/Develop/Golang/fileOpener/bin"
+cron = ""
+when = ""
