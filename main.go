@@ -32,6 +32,12 @@ func main() {
 		fmt.Printf("  cron is %s\n", v.Cron)
 		fmt.Printf("  when is %s\n", v.When)
 
+		err, cron := v.GetCron()
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(cron)
+
 		wg.Add(1)
 		go func(wg *sync.WaitGroup, file conf.FileInfo) {
 			if err := file.Run(); err != nil {

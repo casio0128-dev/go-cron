@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6686e879-c114-422d-9dec-2621b5a14df7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/bin/fileOpener.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/fileOpener.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fileOpener.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/fileOpener.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fileOpener.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/go_build_fileOpener" beforeDir="false" afterPath="$PROJECT_DIR$/bin/go_build_fileOpener" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/conf.go" beforeDir="false" afterPath="$PROJECT_DIR$/conf/conf.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.tml" beforeDir="false" afterPath="$PROJECT_DIR$/config.tml" afterDir="false" />
@@ -62,7 +60,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build fileOpener.exe">
+  <component name="RunManager" selected="Go Build.go build fileOpener">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="fileOpener" />
       <working_directory value="$PROJECT_DIR$/" />

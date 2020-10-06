@@ -5,6 +5,7 @@ import (
 	"os/exec"
 	"regexp"
 	"runtime"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -26,6 +27,23 @@ type FileInfo struct {
 	When string			`toml:"when"`
 	Cron string			`toml:"cron"`
 }
+
+const (
+	MINUTE_MIN = 0
+	MINUTE_MAX = 59
+	HOUR_MIN = 0
+	HOUR_MAX = 23
+	DAY_MIN = 1
+	DAY_MAX = 31
+	MONTH_MIN = 1
+	MONTH_MAX = 12
+	WEEK_MIN = 0	// sun mon tue wed thu fri sat sun
+	WEEK_MAX = 7 	//  0   1   2   3   4   5   6   7
+
+	ASTAH = "*"
+	SEPARATER_SLASH = "/"
+	SEPARATER_CONMA = ","
+)
 
 func (conf *Config) Parse () error {
 	reg, err := regexp.Compile(`({.{1,4}})`)
@@ -67,43 +85,65 @@ func (user User) parseDate (src, format string) (result string) {
 }
 
 type CronInfo struct {
-	Minute string
-	Hour string
-	Day string
-	Month string
-	Week string
+	Minute cronDuration
+	Hour cronDuration
+	Day cronDuration
+	Month cronDuration
+	Week cronDuration
 }
 
-func (file FileInfo) GetCron() *CronInfo {
+type cronDuration struct {
+	min int				// 範囲指定（最小）
+	max int				// 範囲指定（最大）
+	duration int		// min - max間での実行期間
+}
+
+func NewDuration(min, max, duration int) *cronDuration{
+	return &cronDuration{
+		min: min,
+		max: max,
+		duration: duration,
+	}
+}
+
+func (file FileInfo) GetCron() (error, *CronInfo) {
+
+	var min cronDuration
+	var hour cronDuration
+	var day cronDuration
+	var mon cronDuration
+	var week cronDuration
+
 	cronInfo := strings.Split(file.Cron, " ")
-	if len(cronInfo) <= 4 {
-		return nil
+	if !strings.EqualFold(file.Cron, "") && len(cronInfo) <= 4 {
+		return fmt.Errorf("invalid format."), nil
 	}
 
-/*	min := cronInfo[0]
-	hour  := cronInfo[1]
-	day  := cronInfo[2]
-	mon  := cronInfo[3]
-	week  := cronInfo[4]*/
+	minCron := strings.Split(cronInfo[0], SEPARATER_SLASH)
+	if strings.EqualFold(cronInfo[0], SEPARATER_SLASH) {
+		min = *NewDuration(MINUTE_MIN, MINUTE_MAX, 1)
+	} else if len(minCron) == 2 {
+		var num int
 
-/*	if strings.EqualFold(min, "*") {
-		min = "1"
-	} else if len(strings.Split(min, "/")) == 2 {
-		num, err := strings.Atoi(strings.Split(min, "/")[0])
-		denom, err := strings.Atoi(strings.Split(min, "/")[1])
-		if err != nil {
-			panic(err)
+		if strings.EqualFold(strings.Split(cronInfo[0], SEPARATER_SLASH)[0], ASTAH) {
+			num = MINUTE_MAX
+		} else {
+			num, _ = strconv.Atoi(minCron[0])
 		}
-		min = fmt.Sprintf("%s", int(num / denom))
-	}*/
+		denom, err := strconv.Atoi(minCron[1])
 
+		if err != nil {
+			return err, nil
+		}
+		min = *NewDuration(MINUTE_MIN, num, denom)
+	}
 
-	return &CronInfo{
-		Minute: cronInfo[0],
-		Hour:   cronInfo[1],
-		Day:   cronInfo[2],
-		Month:  cronInfo[3],
-		Week:   cronInfo[4],
+	return nil, &CronInfo{
+		Minute: min,
+		Hour:   hour,
+		Day:   day,
+		Month:  mon,
+		Week:   week,
 	}
 }
 
