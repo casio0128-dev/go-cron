@@ -3,11 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6686e879-c114-422d-9dec-2621b5a14df7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/fileOpener.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/fileOpener.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/go_build_fileOpener" beforeDir="false" afterPath="$PROJECT_DIR$/bin/go_build_fileOpener" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/conf.go" beforeDir="false" afterPath="$PROJECT_DIR$/conf/conf.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.tml" beforeDir="false" afterPath="$PROJECT_DIR$/config.tml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

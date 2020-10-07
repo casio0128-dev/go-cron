@@ -98,7 +98,7 @@ type cronDuration struct {
 	duration int		// min - max間での実行期間
 }
 
-func NewDuration(min, max, duration int) *cronDuration{
+func NewDuration(min, max, duration int) *cronDuration {
 	return &cronDuration{
 		min: min,
 		max: max,
@@ -106,7 +106,35 @@ func NewDuration(min, max, duration int) *cronDuration{
 	}
 }
 
-func (file FileInfo) GetCron() (error, *CronInfo) {
+func NewDurationWithCron(min, max int, cronString string) *cronDuration {
+	var result cronDuration
+
+	if strings.EqualFold(cronString, "") {
+		return nil
+	}
+
+	cronNum := strings.Split(cronString, SEPARATER_SLASH)
+	if strings.EqualFold(cronString, ASTAH) {
+		result = *NewDuration(min, max, 1)
+	} else if len(cronNum) == 2 {
+		var num int
+
+		if strings.EqualFold(strings.Split(cronString, SEPARATER_SLASH)[0], ASTAH) {
+			num = MINUTE_MAX
+		} else {
+			num, _ = strconv.Atoi(cronNum[0])
+		}
+		denom, err := strconv.Atoi(cronNum[1])
+
+		if err != nil {
+			return nil
+		}
+		result = *NewDuration(MINUTE_MIN, num, denom)
+	}
+	return &result
+}
+
+func (file FileInfo) GetCron() (*CronInfo, error) {
 
 	var min cronDuration
 	var hour cronDuration
@@ -116,35 +144,32 @@ func (file FileInfo) GetCron() (error, *CronInfo) {
 
 	cronInfo := strings.Split(file.Cron, " ")
 	if !strings.EqualFold(file.Cron, "") && len(cronInfo) <= 4 {
-		return fmt.Errorf("invalid format."), nil
+		return nil, fmt.Errorf("invalid format.")
 	}
 
-	minCron := strings.Split(cronInfo[0], SEPARATER_SLASH)
-	if strings.EqualFold(cronInfo[0], SEPARATER_SLASH) {
-		min = *NewDuration(MINUTE_MIN, MINUTE_MAX, 1)
-	} else if len(minCron) == 2 {
-		var num int
-
-		if strings.EqualFold(strings.Split(cronInfo[0], SEPARATER_SLASH)[0], ASTAH) {
-			num = MINUTE_MAX
-		} else {
-			num, _ = strconv.Atoi(minCron[0])
-		}
-		denom, err := strconv.Atoi(minCron[1])
-
-		if err != nil {
-			return err, nil
-		}
-		min = *NewDuration(MINUTE_MIN, num, denom)
+	if c := NewDurationWithCron(MINUTE_MIN, MINUTE_MAX, cronInfo[0]); c != nil {
+		min = *c
+	}
+	if c := NewDurationWithCron(HOUR_MIN, HOUR_MAX, cronInfo[1]); c != nil {
+		hour = *c
+	}
+	if c := NewDurationWithCron(DAY_MIN, DAY_MAX, cronInfo[2]); c != nil {
+		day = *c
+	}
+	if c := NewDurationWithCron(MONTH_MIN, MONTH_MAX, cronInfo[3]); c != nil {
+		mon = *c
+	}
+	if c := NewDurationWithCron(WEEK_MIN, WEEK_MAX, cronInfo[4]); c != nil {
+		week = *c
 	}
 
-	return nil, &CronInfo{
+	return &CronInfo{
 		Minute: min,
 		Hour:   hour,
 		Day:   day,
 		Month:  mon,
 		Week:   week,
-	}
+	}, nil
 }
 
 func (file FileInfo) Run () error {
