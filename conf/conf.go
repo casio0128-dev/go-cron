@@ -85,11 +85,56 @@ func (user User) parseDate (src, format string) (result string) {
 }
 
 type CronInfo struct {
-	Minute cronDuration
-	Hour cronDuration
-	Day cronDuration
-	Month cronDuration
-	Week cronDuration
+	Minute []cronDuration
+	Hour []cronDuration
+	Day []cronDuration
+	Month []cronDuration
+	Week []cronDuration
+}
+
+func (ci *CronInfo) addMinute(cd cronDuration) error {
+	if &cd == nil {
+		return fmt.Errorf("cronDuration is empty.")
+	}
+
+	ci.Minute = append(ci.Minute, cd)
+	return nil
+}
+
+func (ci *CronInfo) addHour(cd cronDuration) error {
+	if &cd == nil {
+		return fmt.Errorf("cronDuration is empty.")
+	}
+
+	ci.Hour = append(ci.Hour, cd)
+	return nil
+}
+
+func (ci *CronInfo) addDay(cd cronDuration) error {
+	if &cd == nil {
+		return fmt.Errorf("cronDuration is empty.")
+	}
+
+	ci.Day = append(ci.Day, cd)
+	return nil
+}
+
+func (ci *CronInfo) addMonth(cd cronDuration) error {
+	if &cd == nil {
+		return fmt.Errorf("cronDuration is empty.")
+	}
+
+	ci.Month = append(ci.Month, cd)
+	return nil
+}
+
+func (ci *CronInfo) addWeek(cd cronDuration) error {
+	if &cd == nil {
+		return fmt.Errorf("cronDuration is empty.")
+	}
+
+	ci.Week = append(ci.Week, cd)
+	return nil
 }
 
 type cronDuration struct {
@@ -136,31 +181,33 @@ func NewDurationWithCron(min, max int, cronString string) *cronDuration {
 
 func (file FileInfo) GetCron() (*CronInfo, error) {
 
-	var min cronDuration
-	var hour cronDuration
-	var day cronDuration
-	var mon cronDuration
-	var week cronDuration
+	var min []cronDuration
+	var hour []cronDuration
+	var day []cronDuration
+	var mon []cronDuration
+	var week []cronDuration
 
 	cronInfo := strings.Split(file.Cron, " ")
 	if !strings.EqualFold(file.Cron, "") && len(cronInfo) <= 4 {
 		return nil, fmt.Errorf("invalid format.")
+	} else if strings.EqualFold(file.Cron, "") {
+		return nil, nil
 	}
 
 	if c := NewDurationWithCron(MINUTE_MIN, MINUTE_MAX, cronInfo[0]); c != nil {
-		min = *c
+		min = append(min, *c)
 	}
 	if c := NewDurationWithCron(HOUR_MIN, HOUR_MAX, cronInfo[1]); c != nil {
-		hour = *c
+		hour = append(hour, *c)
 	}
 	if c := NewDurationWithCron(DAY_MIN, DAY_MAX, cronInfo[2]); c != nil {
-		day = *c
+		day = append(day, *c)
 	}
 	if c := NewDurationWithCron(MONTH_MIN, MONTH_MAX, cronInfo[3]); c != nil {
-		mon = *c
+		mon = append(mon, *c)
 	}
 	if c := NewDurationWithCron(WEEK_MIN, WEEK_MAX, cronInfo[4]); c != nil {
-		week = *c
+		week = append(week, *c)
 	}
 
 	return &CronInfo{

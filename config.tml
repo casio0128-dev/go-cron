@@ -7,6 +7,17 @@ date = 2020-10-03T00:00:00Z
 [[user.fileInfo]]
 id = 1
 path = "/Users/casio-mac/Develop/Golang/fileOpener"
-#path = "/sample/{YYYY}/{MM}/{D}"
 cron = "*/20 */2 * * *"
+when = ""
+
+[[user.fileInfo]]
+id = 0
+path = "/Users/casio-mac/Develop/Golang/fileOpener/bin"
+cron = ""
+when = ""
+
+[[user.fileInfo]]
+id = 0
+path = "/Users/casio-mac/Develop/Golang/fileOpener/"
+cron = ""
 when = ""
